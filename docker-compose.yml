@@ -1,0 +1,50 @@
+services:
+
+  app:
+    build: ./WorkplaceApi
+    ports:
+      - "80:80"
+    depends_on:
+      - mongo
+      - employees
+    networks:
+      - app-network
+
+  mongo:
+    image: mongo:4.4.6
+    ports:
+      - "27017:27017"
+    networks:
+      - app-network
+
+  db:
+      image: mcr.microsoft.com/mssql/server:2019-latest
+      environment:
+        ACCEPT_EULA: "Y"
+        SA_PASSWORD: "#123SuperSecure"
+        MSSQL_PID: "Express"
+        MSSQL_DBNAME: "db"
+      ports:
+        - "1433:1433"
+      healthcheck:
+        test: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "$$SA_PASSWORD" -Q "SELECT 1" || exit 1
+        interval: 10s
+        timeout: 3s
+        retries: 10
+        start_period: 10s
+      networks:
+        - app-network
+
+  employees:
+    build: ./EmployeesApi
+    ports:
+      - "5000:80"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
