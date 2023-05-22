@@ -13,6 +13,7 @@ router.get('/', async (req, res) => {
             for (let result of results) {
                 let ids = [];
                 let employeesArray = [];
+                let success = true;
 
                 result = result.toJSON();
 
@@ -22,7 +23,7 @@ router.get('/', async (req, res) => {
                 delete result.__v;
 
                 for (let id of ids) {
-                    await axios.get(`http://employees:80/api/employees/${id}`).then(response => {
+                    await axios.get(`http://employees:80/api/employees/${id}`, { timeout: 1000 }).then(response => {
                         let employeeBody = {
                             firstName: response.data.firstName,
                             lastName: response.data.lastName,
@@ -32,10 +33,16 @@ router.get('/', async (req, res) => {
                         };
                         employeesArray.push(employeeBody);
                     }).catch(error => {
+                        success = false;
                     });
                 }
-                result.employees = employeesArray;
-                resultsArray.push(result);
+                if (success) {
+                    result.employees = employeesArray;
+                    resultsArray.push(result);
+                } else {
+                    result.employees = errorTemplate(500, 'Failed to connect to employees service!');
+                    resultsArray.push(result);
+                }
             }
             res.status(200);
             res.send(resultsArray);
@@ -112,6 +119,7 @@ router.get('/:id', async (req, res) => {
         if (result !== null) {
             let ids = [];
             let employeesArray = [];
+            let success = true;
 
             result = result.toJSON();
 
@@ -121,7 +129,7 @@ router.get('/:id', async (req, res) => {
             delete result.__v;
 
             for (let id of ids) {
-                await axios.get(`http://employees:80/api/employees/${id}`).then(response => {
+                await axios.get(`http://employees:80/api/employees/${id}`, { timeout: 1000 }).then(response => {
                     let employeeBody = {
                         firstName: response.data.firstName,
                         lastName: response.data.lastName,
@@ -131,10 +139,15 @@ router.get('/:id', async (req, res) => {
                     };
                     employeesArray.push(employeeBody);
                 }).catch(error => {
+                    success = false;
                 });
             }
 
-            result.employees = employeesArray;
+            if (success) {
+                result.employees = employeesArray;
+            } else {
+                result.employees = errorTemplate(500, 'Failed to connect to employees service!')
+            }
             res.status(200);
             res.send(result);
         } else {
