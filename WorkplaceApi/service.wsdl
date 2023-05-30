@@ -13,11 +13,11 @@
             <!-- Employee tipas -->
             <xsd:complexType name="Employee">
                 <xsd:sequence>
-                    <xsd:element name="firstName" type="xsd:string"/>
-                    <xsd:element name="lastName" type="xsd:string"/>
-                    <xsd:element name="homeAddress" type="xsd:string"/>
-                    <xsd:element name="currentSalary" type="xsd:integer"/>
-                    <xsd:element name="positionName" type="xsd:string"/>
+                    <xsd:element minOccurs="1" maxOccurs="1" name="firstName" type="xsd:string"/>
+                    <xsd:element minOccurs="1" maxOccurs="1" name="lastName" type="xsd:string"/>
+                    <xsd:element minOccurs="1" maxOccurs="1" name="homeAddress" type="xsd:string"/>
+                    <xsd:element minOccurs="1" maxOccurs="1" name="currentSalary" type="xsd:integer"/>
+                    <xsd:element minOccurs="1" maxOccurs="1" name="positionName" type="xsd:string"/>
                 </xsd:sequence>
             </xsd:complexType>
 
@@ -33,7 +33,7 @@
             <xsd:element name="WorkplaceRequest"> 
                 <xsd:complexType>
                     <xsd:sequence>
-                        <xsd:element name="_id" type="xsd:integer"/>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="_id" type="xsd:integer"/>
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
@@ -42,7 +42,7 @@
             <xsd:element name="WorkplaceDeleteRequest">
                 <xsd:complexType>
                     <xsd:sequence>
-                        <xsd:element name="_id" type="xsd:integer"/>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="_id" type="xsd:integer"/>
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
@@ -51,12 +51,12 @@
             <xsd:element name="WorkplaceCreateRequest">
                 <xsd:complexType>
                     <xsd:sequence>
-                        <xsd:element name="companyName" type="xsd:string"/>
-                        <xsd:element name="description" type="xsd:string"/>
-                        <xsd:element name="industry" type="xsd:string"/>
-                        <xsd:element name="website" type="xsd:string"/>
-                        <xsd:element name="specialities" type="xsd:string"/>
-                        <xsd:element name="employees" type="tns:Employee"/>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="companyName" type="xsd:string"/>
+                        <xsd:element minOccurs="0" maxOccurs="1" name="description" type="xsd:string"/>
+                        <xsd:element minOccurs="0" maxOccurs="1" name="industry" type="xsd:string"/>
+                        <xsd:element minOccurs="0" maxOccurs="1" name="website" type="xsd:string"/>
+                        <xsd:element minOccurs="0" maxOccurs="unbound" name="specialities" type="xsd:string"/>
+                        <xsd:element minOccurs="0" maxOccurs="unbound" name="employees" type="tns:Employee"/>
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
@@ -65,13 +65,13 @@
             <xsd:element name="WorkplaceEditRequest">
                 <xsd:complexType>
                     <xsd:sequence>
-                        <xsd:element name="_id" type="xsd:integer"/>
-                        <xsd:element name="companyName" type="xsd:string"/>
-                        <xsd:element name="description" type="xsd:string"/>
-                        <xsd:element name="industry" type="xsd:string"/>
-                        <xsd:element name="website" type="xsd:string"/>
-                        <xsd:element name="specialities" type="xsd:string"/>
-                        <xsd:element name="employees" type="tns:Employee"/>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="_id" type="xsd:integer"/>
+                        <xsd:element minOccurs="0" maxOccurs="1" name="companyName" type="xsd:string"/>
+                        <xsd:element minOccurs="0" maxOccurs="1" name="description" type="xsd:string"/>
+                        <xsd:element minOccurs="0" maxOccurs="1" name="industry" type="xsd:string"/>
+                        <xsd:element minOccurs="0" maxOccurs="1" name="website" type="xsd:string"/>
+                        <xsd:element minOccurs="0" maxOccurs="unbound" name="specialities" type="xsd:string"/>
+                        <xsd:element minOccurs="0" maxOccurs="unbound" name="employees" type="tns:Employee"/>
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
@@ -111,7 +111,7 @@
             <xsd:element name="PositionRequest">
                 <xsd:complexType>
                     <xsd:sequence>
-                        <xsd:element name="_id" type="xsd:integer"/>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="_id" type="xsd:integer"/>
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
@@ -120,7 +120,7 @@
             <xsd:element name="WorkplacePositionsRequest">
                 <xsd:complexType>
                     <xsd:sequence>
-                        <xsd:element name="workplaceId" type="xsd:integer"/>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="workplaceId" type="xsd:integer"/>
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
@@ -129,8 +129,8 @@
             <xsd:element name="WorkplacePositionRequest">
                 <xsd:complexType>
                     <xsd:sequence>
-                        <xsd:element name="workplaceId" type="xsd:integer"/>
-                        <xsd:element name="id" type="xsd:integer"/>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="workplaceId" type="xsd:integer"/>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="id" type="xsd:integer"/>
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
@@ -139,7 +139,7 @@
             <xsd:element name="PositionDeleteRequest">
                 <xsd:complexType>
                     <xsd:sequence>
-                        <xsd:element name="_id" type="xsd:integer"/>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="_id" type="xsd:integer"/>
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
@@ -147,8 +147,8 @@
             <xsd:element name="WorkplacePositionDeleteRequest">
                 <xsd:complexType>
                     <xsd:sequence>
-                        <xsd:element name="workplaceId" type="xsd:integer"/>
-                        <xsd:element name="id" type="xsd:integer"/>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="workplaceId" type="xsd:integer"/>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="id" type="xsd:integer"/>
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
@@ -157,13 +157,13 @@
             <xsd:element name="PositionCreateRequest">
                 <xsd:complexType>
                     <xsd:sequence>
-                        <xsd:element name="workplaceId" type="xsd:integer"/>
-                        <xsd:element name="positionName" type="xsd:string"/>
-                        <xsd:element name="location" type="xsd:string"/>
-                        <xsd:element name="workTimeNorm" type="xsd:string"/>
-                        <xsd:element name="description" type="xsd:string"/>
-                        <xsd:element name="requirements" type="xsd:string"/>
-                        <xsd:element name="salary" type="xsd:integer"/>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="workplaceId" type="xsd:integer"/>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="positionName" type="xsd:string"/>
+                        <xsd:element minOccurs="0" maxOccurs="1" name="location" type="xsd:string"/>
+                        <xsd:element minOccurs="0" maxOccurs="1" name="workTimeNorm" type="xsd:string"/>
+                        <xsd:element minOccurs="0" maxOccurs="1" name="description" type="xsd:string"/>
+                        <xsd:element minOccurs="0" maxOccurs="unbound" name="requirements" type="xsd:string"/>
+                        <xsd:element minOccurs="0" maxOccurs="1" name="salary" type="xsd:integer"/>
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
@@ -172,13 +172,13 @@
             <xsd:element name="PositionEditRequest">
                 <xsd:complexType>
                     <xsd:sequence>
-                        <xsd:element name="_id" type="xsd:integer"/>
-                        <xsd:element name="positionName" type="xsd:string"/>
-                        <xsd:element name="location" type="xsd:string"/>
-                        <xsd:element name="workTimeNorm" type="xsd:string"/>
-                        <xsd:element name="description" type="xsd:string"/>
-                        <xsd:element name="requirements" type="xsd:string"/>
-                        <xsd:element name="salary" type="xsd:integer"/>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="_id" type="xsd:integer"/>
+                        <xsd:element minOccurs="0" maxOccurs="1" name="positionName" type="xsd:string"/>
+                        <xsd:element minOccurs="0" maxOccurs="1" name="location" type="xsd:string"/>
+                        <xsd:element minOccurs="0" maxOccurs="1" name="workTimeNorm" type="xsd:string"/>
+                        <xsd:element minOccurs="0" maxOccurs="1" name="description" type="xsd:string"/>
+                        <xsd:element minOccurs="0" maxOccurs="unbound" name="requirements" type="xsd:string"/>
+                        <xsd:element minOccurs="0" maxOccurs="1" name="salary" type="xsd:integer"/>
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
@@ -187,14 +187,14 @@
             <xsd:element name="WorkplacePositionEditRequest">
                 <xsd:complexType>
                     <xsd:sequence>
-                        <xsd:element name="workplaceId" type="xsd:integer"/>
-                        <xsd:element name="id" type="xsd:integer"/>
-                        <xsd:element name="positionName" type="xsd:string"/>
-                        <xsd:element name="location" type="xsd:string"/>
-                        <xsd:element name="workTimeNorm" type="xsd:string"/>
-                        <xsd:element name="description" type="xsd:string"/>
-                        <xsd:element name="requirements" type="xsd:string"/>
-                        <xsd:element name="salary" type="xsd:integer"/>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="workplaceId" type="xsd:integer"/>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="id" type="xsd:integer"/>
+                        <xsd:element minOccurs="0" maxOccurs="1" name="positionName" type="xsd:string"/>
+                        <xsd:element minOccurs="0" maxOccurs="1" name="location" type="xsd:string"/>
+                        <xsd:element minOccurs="0" maxOccurs="1" name="workTimeNorm" type="xsd:string"/>
+                        <xsd:element minOccurs="0" maxOccurs="1" name="description" type="xsd:string"/>
+                        <xsd:element minOccurs="0" maxOccurs="unbound" name="requirements" type="xsd:string"/>
+                        <xsd:element minOccurs="0" maxOccurs="1" name="salary" type="xsd:integer"/>
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
