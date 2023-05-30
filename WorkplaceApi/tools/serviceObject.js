@@ -1,36 +1,85 @@
-import { Position, Workplace } from './tools/database.js';
+import { Position, Workplace } from "./database.js";
+import axios from 'axios';
 
 // SOAP 
 async function getWorkplace(args) {
-    const workplace = await Workplace.findOne(args);
+    let workplace = await Workplace.findOne(args);
+
+    let ids = [];
+    let employeesArray = [];
+
+    workplace = workplace.toJSON()
+
+    ids = workplace.employees;
+    workplace.employees = [];
+
+    for (let id of ids) {
+        await axios.get(`http://employees:80/api/employees/${id}`, { timeout: 1000 }).then(response => {
+            let employeeBody = {
+                firstName: response.data.firstName,
+                lastName: response.data.lastName,
+                homeAddress: response.data.homeAddress,
+                currentSalary: response.data.currentSalary,
+                position: response.data.role.position
+            };
+            employeesArray.push(employeeBody);
+        }).catch(error => {
+        });
+    }
+
     return {
         _id: workplace._id,
         companyName: workplace.companyName,
         description: workplace.description,
         industry: workplace.industry,
         website: workplace.website,
-        specialities: workplace.specialities
+        specialities: workplace.specialities,
+        employees: employeesArray
     };
 }
 
 async function getWorkplaces() {
-    const workplaces = await Workplace.find();
-    const returnArr = [];
-    workplaces.forEach((workplace) => {
+    let workplaces = await Workplace.find();
+    let returnArr = [];
+
+    for (let workplace of workplaces) {
+        let ids = [];
+        let employeesArray = [];
+
+        workplace = workplace.toJSON()
+
+        ids = workplace.employees;
+        workplace.employees = [];
+
+        for (let id of ids) {
+            await axios.get(`http://employees:80/api/employees/${id}`, { timeout: 1000 }).then(response => {
+                let employeeBody = {
+                    firstName: response.data.firstName,
+                    lastName: response.data.lastName,
+                    homeAddress: response.data.homeAddress,
+                    currentSalary: response.data.currentSalary,
+                    position: response.data.role.position
+                };
+                employeesArray.push(employeeBody);
+            }).catch(error => {
+            });
+        }
+
         returnArr.push({
             _id: workplace._id,
             companyName: workplace.companyName,
             description: workplace.description,
             industry: workplace.industry,
             website: workplace.website,
-            specialities: workplace.specialities
+            specialities: workplace.specialities,
+            employees: employeesArray
         });
-    });
+    }
     return returnArr;
 }
 
 async function getPosition(args) {
-    const position = await Position.findOne(args);
+    let position = await Position.findOne(args);
     return {
         _id: position._id,
         workplaceId: position.workplaceId,
@@ -44,8 +93,8 @@ async function getPosition(args) {
 }
 
 async function getPositions() {
-    const positions = await Position.find();
-    const returnArr = [];
+    let positions = await Position.find();
+    let returnArr = [];
     positions.forEach((position) => {
         returnArr.push({
             _id: position._id,
@@ -62,8 +111,8 @@ async function getPositions() {
 }
 
 async function getWorkplacePositions(args) {
-    const positions = await Position.find(args);
-    const returnArr = [];
+    let positions = await Position.find(args);
+    let returnArr = [];
     positions.forEach((position) => {
         returnArr.push({
             id: position.id,
@@ -80,7 +129,7 @@ async function getWorkplacePositions(args) {
 }
 
 async function getWorkplacePosition(args) {
-    const position = await Position.findOne(args);
+    let position = await Position.findOne(args);
     return {
         id: position.id,
         workplaceId: position.workplaceId,
@@ -126,6 +175,25 @@ async function createWorkplace(args) {
         lastID = 0;
     });
 
+    let employeesArray = [];
+
+    if (args.employees) {
+        if (args.employees.length > 1) {
+            let employees = args.employees;
+            for (let employee of employees) {
+                await axios.post('http://employees:80/api/employees', employee).then(response => {
+                    employeesArray.push(response.data.id);
+                }).catch(error => {
+                });
+            }
+        } else {
+            await axios.post('http://employees:80/api/employees', args.employees).then(response => {
+                employeesArray.push(response.data.id);
+            }).catch(error => {
+            });
+        }
+    }
+
     let newWorkplace = new Workplace({
         _id: lastID + 1,
         companyName: args.companyName,
@@ -133,7 +201,8 @@ async function createWorkplace(args) {
         industry: args.industry,
         website: args.website,
         specialities: args.specialities,
-        refPositions: `/workplaces/${lastID + 1}/positions`
+        refPositions: `/workplaces/${lastID + 1}/positions`,
+        employees: employeesArray
     });
 
     let workplace = await newWorkplace.save();
@@ -144,7 +213,8 @@ async function createWorkplace(args) {
         description: workplace.description,
         industry: workplace.industry,
         website: workplace.website,
-        specialities: workplace.specialities
+        specialities: workplace.specialities,
+        employees: workplace.employees
     };
 }
 
@@ -191,14 +261,33 @@ async function createPosition(args) {
 
 async function editWorkplace(args) {
     let specialities = [];
+    let employeesArray = [];
 
     await Workplace.findOne({ _id: args._id }).then(result => {
         specialities = result.specialities;
+        employeesArray = result.employees;
     }).catch(err => {
     });
 
     if (args.specialities != null) {
         specialities = specialities.concat(args.specialities);
+    }
+
+    if (args.employees) {
+        if (args.employees.length > 1) {
+            let employees = args.employees;
+            for (let employee of employees) {
+                await axios.post('http://employees:80/api/employees', employee).then(response => {
+                    employeesArray.push(response.data.id);
+                }).catch(error => {
+                });
+            }
+        } else {
+            await axios.post('http://employees:80/api/employees', args.employees).then(response => {
+                employeesArray.push(response.data.id);
+            }).catch(error => {
+            });
+        }
     }
 
     let newWorkplace = new Workplace({
@@ -207,7 +296,8 @@ async function editWorkplace(args) {
         description: args.description,
         industry: args.industry,
         website: args.website,
-        specialities: specialities
+        specialities: specialities,
+        employees: employeesArray
     });
 
     let workplace = await Workplace.findOneAndUpdate({ _id: args._id }, newWorkplace, { new: true });
@@ -218,7 +308,8 @@ async function editWorkplace(args) {
         description: workplace.description,
         industry: workplace.industry,
         website: workplace.website,
-        specialities: workplace.specialities
+        specialities: workplace.specialities,
+        employees: workplace.employees
     };
 }
 
@@ -292,7 +383,7 @@ async function editWorkplacePosition(args) {
     };
 }
 
-const serviceObject = {
+let serviceObject = {
     WrokplaceService: {
         WorkplaceServicePort: {
             getWorkplace: getWorkplace,

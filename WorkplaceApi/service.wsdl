@@ -10,6 +10,17 @@
 
     <wsdl:types>
         <xsd:schema targetNamespace="http://tempuri.org/" >
+            <!-- Employee tipas -->
+            <xsd:complexType name="Employee">
+                <xsd:sequence>
+                    <xsd:element name="firstName" type="xsd:string"/>
+                    <xsd:element name="lastName" type="xsd:string"/>
+                    <xsd:element name="homeAddress" type="xsd:string"/>
+                    <xsd:element name="currentSalary" type="xsd:integer"/>
+                    <xsd:element name="positionName" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
             <!-- Visu darbovieciu uzklausa -->
             <xsd:element name="WorkplacesRequest">
                 <xsd:complexType>
@@ -45,6 +56,7 @@
                         <xsd:element name="industry" type="xsd:string"/>
                         <xsd:element name="website" type="xsd:string"/>
                         <xsd:element name="specialities" type="xsd:string"/>
+                        <xsd:element name="employees" type="tns:Employee"/>
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
@@ -59,6 +71,7 @@
                         <xsd:element name="industry" type="xsd:string"/>
                         <xsd:element name="website" type="xsd:string"/>
                         <xsd:element name="specialities" type="xsd:string"/>
+                        <xsd:element name="employees" type="tns:Employee"/>
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
@@ -73,6 +86,7 @@
                         <xsd:element name="industry" type="xsd:string"/>
                         <xsd:element name="website" type="xsd:string"/>
                         <xsd:element name="specialities" type="xsd:string"/>
+                        <xsd:element name="employees" type="tns:Employee"/>
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
@@ -224,6 +238,8 @@
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
+
+            
         </xsd:schema>
     </wsdl:types>
 
@@ -312,6 +328,7 @@
         <wsdl:part name="params" element="tns:PositionsResponse"/>
     </wsdl:message>
     
+
     <wsdl:portType name="WorkplacePort">
         <wsdl:operation name="getWorkplace">
             <wsdl:input message="tns:getWorkplaceRequest"/>
