@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="WorkplaceEmployee"
+    targetNamespace="http://tempuri.org/"
+    xmlns:tns="http://tempuri.org/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:http="http://schemas.xmlsoap.org/wsdl/http/">
+
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://tempuri.org/" >
+            <xsd:complexType name="StringList">
+                <xsd:complexContent>
+                    <xsd:restriction base="SOAP-ENC:Array">
+                        <xsd:attribute wsdl:arrayType="xsd:string[]" ref="SOAP-ENC:arrayType"/>
+                    </xsd:restriction>
+                </xsd:complexContent>
+            </xsd:complexType>
+
+            <!-- Darbovietes uzklausa pagal _id -->
+            <xsd:element name="WorkplaceRequest"> 
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="_id" type="xsd:integer"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Darbovietes palei _id uzklausos rezultatas -->
+            <xsd:element name="WorkplaceResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="id" type="xsd:string"/>
+                        <xsd:element name="companyName" type="xsd:string"/>
+                        <xsd:element name="description" type="xsd:string"/>
+                        <xsd:element name="industry" type="xsd:string"/>
+                        <xsd:element name="website" type="xsd:string"/>
+                        <xsd:element name="specialities" type="tns:StringList"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Pozicijos uzklausa pagal _id -->
+            <xsd:element name="PositionRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="_id" type="xsd:integer"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Pozicijos palei _id uzklausos rezultas -->
+            <xsd:element name="PositionResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="_id" type="xsd:integer"/>
+                        <xsd:element name="workplaceId" type="xsd:integer"/>
+                        <xsd:element name="positionName" type="xsd:string"/>
+                        <xsd:element name="location" type="xsd:string"/>
+                        <xsd:element name="workTimeNorm" type="xsd:string"/>
+                        <xsd:element name="description" type="xsd:string"/>
+                        <xsd:element name="requirements" type="tns:StringList"/>
+                        <xsd:element name="salary" type="xsd:integer"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Pozicijos uzklausa pagal id esancios darbovieteje su _id -->
+            <xsd:element name="WorkplacePositionRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="_id" type="xsd:integer"/>
+                        <xsd:element name="id" type="xsd:integer"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Poziju esanciu darbovieteje su _id uzklausa -->
+            <xsd:element name="WorkplacePositionsRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="_id" type="xsd:integer"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Gauti visas darbovietes -->
+            <xsd:element name="WorkplacesRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            
+            <!-- Gauti visas pozicijas -->
+            <xsd:element name="PositionsRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+
+    <wsdl:message name="getWorkplaceRequest">
+        <wsdl:part name="params" element="tns:WorkplaceRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getWorkplaceResponse">
+        <wsdl:part name="params" element="tns:WorkplaceResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getPositionRequest">
+        <wsdl:part name="params" element="tns:PositionRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getPositionResponse">
+        <wsdl:part name="params" element="tns:PositionResponse"/>
+    </wsdl:message>
+
+    <wsdl:portType name="WorkplacePort">
+        <wsdl:operation name="getWorkplace">
+            <wsdl:input message="tns:getWorkplaceRequest"/>
+            <wsdl:output message="tns:getWorkplaceResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getPosition">
+            <wsdl:input message="tns:getPositionRequest"/>
+            <wsdl:output message="tns:getPositionResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:binding name="WorkplaceServiceBinding" type="tns:WorkplacePort">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="getWorkplace">
+            <soap:opearion soapAction="getWorkplace"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="getPosition">
+            <soap:opearion soapAction="getPosition"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <wsdl:service name="WrokplaceService">
+        <wsdl:port name="WorkplaceServicePort" binding="tns:WorkplaceServiceBinding">
+            <soap:address location="http://localhost:80/wsdl/"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

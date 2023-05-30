@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="WorkplaceEmployee"
+    targetNamespace="http://tempuri.org/"
+    xmlns:tns="http://tempuri.org/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:http="http://schemas.xmlsoap.org/wsdl/http/">
+
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://tempuri.org/" >
+            <!-- Visu darbovieciu uzklausa -->
+            <xsd:element name="WorkplacesRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Darbovietes uzklausa pagal _id -->
+            <xsd:element name="WorkplaceRequest"> 
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="_id" type="xsd:integer"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Darbovietes istrinimo uzklausa pagal _id -->
+            <xsd:element name="WorkplaceDeleteRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="_id" type="xsd:integer"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Darbuovietes kurimo uzklausa -->
+            <xsd:element name="WorkplaceCreateRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="companyName" type="xsd:string"/>
+                        <xsd:element name="description" type="xsd:string"/>
+                        <xsd:element name="industry" type="xsd:string"/>
+                        <xsd:element name="website" type="xsd:string"/>
+                        <xsd:element name="specialities" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Redaguoti darboviete su _id -->
+            <xsd:element name="WorkplaceEditRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="_id" type="xsd:integer"/>
+                        <xsd:element name="companyName" type="xsd:string"/>
+                        <xsd:element name="description" type="xsd:string"/>
+                        <xsd:element name="industry" type="xsd:string"/>
+                        <xsd:element name="website" type="xsd:string"/>
+                        <xsd:element name="specialities" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Darbovietes uzklausos rezultatas -->
+            <xsd:element name="WorkplaceResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="_id" type="xsd:integer"/>
+                        <xsd:element name="companyName" type="xsd:string"/>
+                        <xsd:element name="description" type="xsd:string"/>
+                        <xsd:element name="industry" type="xsd:string"/>
+                        <xsd:element name="website" type="xsd:string"/>
+                        <xsd:element name="specialities" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Darbovietes istrinimo uzklausos rezultatas -->
+            <xsd:element name="WorkplaceDeleteResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Visu poziciju uzklausa -->
+            <xsd:element name="PositionsRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Pozicijos uzklausa pagal _id -->
+            <xsd:element name="PositionRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="_id" type="xsd:integer"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Visu poziciju priklausanciu darbovietei _id uzklausa -->
+            <xsd:element name="WorkplacePositionsRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="workplaceId" type="xsd:integer"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Pozicijos su id priklausanciai darbovietei _id uzklausa -->
+            <xsd:element name="WorkplacePositionRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="workplaceId" type="xsd:integer"/>
+                        <xsd:element name="id" type="xsd:integer"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Pozicijos istrinimo uzklausa pagal _id -->
+            <xsd:element name="PositionDeleteRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="_id" type="xsd:integer"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="WorkplacePositionDeleteRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="workplaceId" type="xsd:integer"/>
+                        <xsd:element name="id" type="xsd:integer"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Sukurti darbovietei su _id priklausancia pozicija -->
+            <xsd:element name="PositionCreateRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="workplaceId" type="xsd:integer"/>
+                        <xsd:element name="positionName" type="xsd:string"/>
+                        <xsd:element name="location" type="xsd:string"/>
+                        <xsd:element name="workTimeNorm" type="xsd:string"/>
+                        <xsd:element name="description" type="xsd:string"/>
+                        <xsd:element name="requirements" type="xsd:string"/>
+                        <xsd:element name="salary" type="xsd:integer"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Redaguoti pozicija su _id -->
+            <xsd:element name="PositionEditRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="_id" type="xsd:integer"/>
+                        <xsd:element name="positionName" type="xsd:string"/>
+                        <xsd:element name="location" type="xsd:string"/>
+                        <xsd:element name="workTimeNorm" type="xsd:string"/>
+                        <xsd:element name="description" type="xsd:string"/>
+                        <xsd:element name="requirements" type="xsd:string"/>
+                        <xsd:element name="salary" type="xsd:integer"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Redaguoti position su id priklausanti workplace su _id -->
+            <xsd:element name="WorkplacePositionEditRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="workplaceId" type="xsd:integer"/>
+                        <xsd:element name="id" type="xsd:integer"/>
+                        <xsd:element name="positionName" type="xsd:string"/>
+                        <xsd:element name="location" type="xsd:string"/>
+                        <xsd:element name="workTimeNorm" type="xsd:string"/>
+                        <xsd:element name="description" type="xsd:string"/>
+                        <xsd:element name="requirements" type="xsd:string"/>
+                        <xsd:element name="salary" type="xsd:integer"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Pozicijos uzklausos rezultas -->
+            <xsd:element name="PositionResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="_id" type="xsd:integer"/>
+                        <xsd:element name="workplaceId" type="xsd:integer"/>
+                        <xsd:element name="positionName" type="xsd:string"/>
+                        <xsd:element name="location" type="xsd:string"/>
+                        <xsd:element name="workTimeNorm" type="xsd:string"/>
+                        <xsd:element name="description" type="xsd:string"/>
+                        <xsd:element name="requirements" type="xsd:string"/>
+                        <xsd:element name="salary" type="xsd:integer"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Pozicijos palei workplaceId uzklausos rezultas -->
+            <xsd:element name="PositionsResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="id" type="xsd:integer"/>
+                        <xsd:element name="workplaceId" type="xsd:integer"/>
+                        <xsd:element name="positionName" type="xsd:string"/>
+                        <xsd:element name="location" type="xsd:string"/>
+                        <xsd:element name="workTimeNorm" type="xsd:string"/>
+                        <xsd:element name="description" type="xsd:string"/>
+                        <xsd:element name="requirements" type="xsd:string"/>
+                        <xsd:element name="salary" type="xsd:integer"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Pozicijos istrinimo uzklausos rezultatas -->
+            <xsd:element name="PositionDeleteResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+
+    <wsdl:message name="getWorkplaceRequest">
+        <wsdl:part name="params" element="tns:WorkplaceRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getWorkplaceResponse">
+        <wsdl:part name="params" element="tns:WorkplaceResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getPositionRequest">
+        <wsdl:part name="params" element="tns:PositionRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getPositionResponse">
+        <wsdl:part name="params" element="tns:PositionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getWorkplacesRequest">
+        <wsdl:part name="params" element="tns:WorkplacesRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getWorkplacesResponse">
+        <wsdl:part name="params" element="tns:WorkplaceResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getPositionsRequest">
+        <wsdl:part name="params" element="tns:PositionsRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getPositionsResponse">
+        <wsdl:part name="params" element="tns:PositionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getWorkplacePositionsRequest">
+        <wsdl:part name="params" element="tns:WorkplacePositionsRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getWorkplacePositionsResponse">
+        <wsdl:part name="params" element="tns:PositionsResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getWorkplacePositionRequest">
+        <wsdl:part name="params" element="tns:WorkplacePositionRequest"/>
+    </wsdl:message>
+    <wsdl:message name="getWorkplacePositionResponse">
+        <wsdl:part name="params" element="tns:PositionsResponse"/>
+    </wsdl:message>
+    <wsdl:message name="deleteWorkplaceRequest">
+        <wsdl:part name="params" element="tns:WorkplaceDeleteRequest"/>
+    </wsdl:message>
+    <wsdl:message name="deleteWorkplaceResponse">
+        <wsdl:part name="params" element="tns:WorkplaceDeleteResponse"/>
+    </wsdl:message>
+    <wsdl:message name="deletePositionRequest">
+        <wsdl:part name="params" element="tns:PositionDeleteRequest"/>
+    </wsdl:message>
+    <wsdl:message name="deletePositionResponse">
+        <wsdl:part name="params" element="tns:PositionDeleteResponse"/>
+    </wsdl:message>
+    <wsdl:message name="deleteWorkplacePositionRequest">
+        <wsdl:part name="params" element="tns:WorkplacePositionDeleteRequest"/>
+    </wsdl:message>
+    <wsdl:message name="deleteWorkplacePositionResponse">
+        <wsdl:part name="params" element="tns:PositionDeleteResponse"/>
+    </wsdl:message>
+    <wsdl:message name="createWorkplaceRequest">
+        <wsdl:part name="params" element="tns:WorkplaceCreateRequest"/>
+    </wsdl:message>
+    <wsdl:message name="createWorkplaceResponse">
+        <wsdl:part name="params" element="tns:WorkplaceResponse"/>
+    </wsdl:message>
+    <wsdl:message name="createPositionRequest">
+        <wsdl:part name="params" element="tns:PositionCreateRequest"/>
+    </wsdl:message>
+    <wsdl:message name="createPositionResponse">
+        <wsdl:part name="params" element="tns:PositionsResponse"/>
+    </wsdl:message>
+    <wsdl:message name="editWorkplaceRequest">
+        <wsdl:part name="params" element="tns:WorkplaceEditRequest"/>
+    </wsdl:message>
+    <wsdl:message name="editWorkplaceResponse">
+        <wsdl:part name="params" element="tns:WorkplaceResponse"/>
+    </wsdl:message>
+    <wsdl:message name="editPositionRequest">
+        <wsdl:part name="params" element="tns:PositionEditRequest"/>
+    </wsdl:message>
+    <wsdl:message name="editPositionResponse">
+        <wsdl:part name="params" element="tns:PositionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="editWorkplacePositionRequest">
+        <wsdl:part name="params" element="tns:WorkplacePositionEditRequest"/>
+    </wsdl:message>
+    <wsdl:message name="editWorkplacePositionResponse">
+        <wsdl:part name="params" element="tns:PositionsResponse"/>
+    </wsdl:message>
+    
+    <wsdl:portType name="WorkplacePort">
+        <wsdl:operation name="getWorkplace">
+            <wsdl:input message="tns:getWorkplaceRequest"/>
+            <wsdl:output message="tns:getWorkplaceResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getPosition">
+            <wsdl:input message="tns:getPositionRequest"/>
+            <wsdl:output message="tns:getPositionResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getWorkplaces">
+            <wsdl:input message="tns:getWorkplacesRequest"/>
+            <wsdl:output message="tns:getWorkplacesResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getPositions">
+            <wsdl:input message="tns:getPositionsRequest"/>
+            <wsdl:output message="tns:getPositionsResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getWorkplacePositions">
+            <wsdl:input message="tns:getWorkplacePositionsRequest"/>
+            <wsdl:output message="tns:getWorkplacePositionsResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getWorkplacePosition">
+            <wsdl:input message="tns:getWorkplacePositionRequest"/>
+            <wsdl:output message="tns:getWorkplacePositionResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="deleteWorkplace">
+            <wsdl:input message="tns:deleteWorkplaceRequest"/>
+            <wsdl:output message="tns:deleteWorkplaceResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="deletePosition">
+            <wsdl:input message="tns:deletePositionRequest"/>
+            <wsdl:output message="tns:deletePositionResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="deleteWorkplacePosition">
+            <wsdl:input message="tns:deleteWorkplacePositionRequest"/>
+            <wsdl:output message="tns:deleteWorkplacePositionResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="createWorkplace">
+            <wsdl:input message="tns:createWorkplaceRequest"/>
+            <wsdl:output message="tns:createWorkplaceResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="createPosition">
+            <wsdl:input message="tns:createPositionRequest"/>
+            <wsdl:output message="tns:createPositionResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="editWorkplace">
+            <wsdl:input message="tns:editWorkplaceRequest"/>
+            <wsdl:output message="tns:editWorkplaceResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="editPosition">
+            <wsdl:input message="tns:editPositionRequest"/>
+            <wsdl:output message="tns:editPositionResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="editWorkplacePosition">
+            <wsdl:input message="tns:editWorkplacePositionRequest"/>
+            <wsdl:output message="tns:editWorkplacePositionResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:binding name="WorkplaceServiceBinding" type="tns:WorkplacePort">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="getWorkplace">
+            <soap:opearion soapAction="getWorkplace"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="getPosition">
+            <soap:opearion soapAction="getPosition"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="getWorkplaces">
+            <soap:opearion soapAction="getWorkplaces"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="getPositions">
+            <soap:opearion soapAction="getPositions"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="getWorkplacePositions">
+            <soap:opearion soapAction="getWorkplacePositions"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="getWorkplacePosition">
+            <soap:opearion soapAction="getWorkplacePosition"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="deleteWorkplace">
+            <soap:opearion soapAction="deleteWorkplace"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="deletePosition">
+            <soap:opearion soapAction="deletePosition"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="deleteWorkplacePosition">
+            <soap:opearion soapAction="deleteWorkplacePosition"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="createWorkplace">
+            <soap:opearion soapAction="createWorkplace"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="createPosition">
+            <soap:opearion soapAction="createPosition"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="editWorkplace">
+            <soap:opearion soapAction="editWorkplace"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="editPosition">
+            <soap:opearion soapAction="editPosition"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="editWorkplacePosition">
+            <soap:opearion soapAction="editWorkplacePosition"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <wsdl:service name="WrokplaceService">
+        <wsdl:port name="WorkplaceServicePort" binding="tns:WorkplaceServiceBinding">
+            <soap:address location="http://localhost:80/wsdl/"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
