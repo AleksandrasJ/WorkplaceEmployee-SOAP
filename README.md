@@ -172,20 +172,6 @@ Body:
          <specialities>Resiliency services</specialities>
          <specialities>Internet of Things</specialities>
          <employees>
-            <firstName>Another</firstName>
-            <lastName>Employee</lastName>
-            <homeAddress>1 Street, Vilnius</homeAddress>
-            <currentSalary>1000</currentSalary>
-            <positionName>SoftwareEnginer</positionName>
-         </employees>
-         <employees>
-            <firstName>Other</firstName>
-            <lastName>Employee</lastName>
-            <homeAddress>1 Alley, Kaunas</homeAddress>
-            <currentSalary>1000</currentSalary>
-            <positionName>Ceo</positionName>
-         </employees>
-         <employees>
             <firstName>Some</firstName>
             <lastName>One</lastName>
             <homeAddress>1 Square, Vilnius</homeAddress>
